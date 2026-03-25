@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwithronna/FireBaseWeek/model/artist/artist.dart';
 import 'package:flutterwithronna/FireBaseWeek/ui/utils/time_format.dart';
 
 import '../../../model/songs/song.dart';
@@ -9,9 +10,11 @@ class SongTile extends StatelessWidget {
     required this.song,
     required this.isPlaying,
     required this.onTap,
+    required this.artist,
   });
 
   final Song song;
+  final Artist artist;
   final bool isPlaying;
   final VoidCallback onTap;
 
@@ -28,7 +31,7 @@ class SongTile extends StatelessWidget {
           leading: CircleAvatar(
             backgroundImage: NetworkImage(song.imageUrl),
           ),
-          subtitle: Text('${TimeFormat.formatDuration(song.duration)} min'),
+          subtitle: Text('${TimeFormat.formatDuration(song.duration)} min ${artist.name} - ${artist.genre}'),
           onTap: onTap,
           title: Text(song.title),
           trailing: Text(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwithronna/FireBaseWeek/data/repositories/artists/artist_repository.dart';
+import 'package:flutterwithronna/FireBaseWeek/model/artist/artist.dart';
 import '../../../../data/repositories/songs/song_repository.dart';
 import '../../../states/player_state.dart';
 import '../../../../model/songs/song.dart';
@@ -7,10 +9,15 @@ import '../../../utils/async_value.dart';
 class LibraryViewModel extends ChangeNotifier {
   final SongRepository songRepository;
   final PlayerState playerState;
+  final ArtistRepository artistRepository;
 
   AsyncValue<List<Song>> songsValue = AsyncValue.loading();
-
-  LibraryViewModel({required this.songRepository, required this.playerState}) {
+  List<Artist> artists = [];
+  LibraryViewModel({
+    required this.songRepository,
+    required this.playerState,
+    required this.artistRepository,
+  }) {
     playerState.addListener(notifyListeners);
 
     // init
@@ -35,13 +42,23 @@ class LibraryViewModel extends ChangeNotifier {
     try {
       // 2- Fetch is successfull
       List<Song> songs = await songRepository.fetchSongs();
+      artists = await artistRepository.fetchArtist();
       songsValue = AsyncValue.success(songs);
     } catch (e) {
       // 3- Fetch is unsucessfull
       songsValue = AsyncValue.error(e);
     }
-     notifyListeners();
+    notifyListeners();
+  }
 
+  Artist? getArtist(Song song) {
+    try {
+      return artists.firstWhere((a)=>
+        a.id == song.artist
+    );
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   bool isSongPlaying(Song song) => playerState.currentSong == song;
