@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwithronna/FireBaseWeek/ui/screens/artist/artist_screen.dart';
 import 'package:provider/provider.dart';
 import 'ui/screens/library/library_screen.dart';
 import 'ui/screens/settings/settings_screen.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [  LibraryScreen(), SettingsScreen()];
+  final List<Widget> _pages = [LibraryScreen(),
+    ArtistScreen(), SettingsScreen(),];
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,10 @@ class _MyAppState extends State<MyApp> {
              BottomNavigationBarItem(
               icon: Icon(Icons.library_music),
               label: 'Library',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: 'Artists',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),

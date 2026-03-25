@@ -1,3 +1,6 @@
+import 'package:flutterwithronna/FireBaseWeek/data/repositories/artists/artist_repository.dart';
+import 'package:flutterwithronna/FireBaseWeek/data/repositories/artists/artist_repostiory_firebase.dart';
+import 'package:flutterwithronna/FireBaseWeek/model/artist/artist.dart';
 import 'package:provider/provider.dart';
  
 import 'data/repositories/songs/song_repository_firebase.dart';
@@ -23,6 +26,8 @@ List<InheritedProvider> get devProviders {
     ChangeNotifierProvider<AppSettingsState>(
       create: (_) => AppSettingsState(repository: appSettingsRepository),
     ),
+
+    Provider<ArtistRepository>(create: (_) => ArtistRepostioryFirebase()),
   ];
 }
 
